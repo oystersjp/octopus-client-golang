@@ -26,7 +26,7 @@ type ErrorMessage struct {
 
 const apiUrl = "https://strong-octopus.com/articles/search?keyword=%s&page=%d"
 
-func searchByKeyword(keyword string, page int) ([]Article, error) {
+func SearchByKeyword(keyword string, page int) ([]Article, error) {
 
 	url := fmt.Sprintf(apiUrl, keyword, page)
 
