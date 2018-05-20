@@ -44,7 +44,7 @@ func SearchByKeyword(keyword string, page int) ([]Article, error) {
 		return nil, err
 	}
 
-	if resp.StatusCode != 200 {
+	if resp.StatusCode < 200 | resp.StatusCode >= 300 {
 		var errorMsg ErrorMessage
 		if err := json.Unmarshal(body, &errorMsg); err != nil {
 			return nil, err
