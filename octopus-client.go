@@ -8,6 +8,10 @@ import (
 	"net/http"
 )
 
+type ErrorMessage struct {
+	Message string `json:"error"`
+}
+
 const apiUrl = "https://strong-octopus.com/articles/search?keyword=%s&page=%d"
 
 func SearchByKeyword(keyword string, page int) ([]Article, error) {
