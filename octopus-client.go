@@ -1,4 +1,4 @@
-package main
+package octopus
 
 import (
 	"encoding/json"
@@ -7,22 +7,6 @@ import (
 	"io/ioutil"
 	"net/http"
 )
-
-type Articles struct {
-	Articles []Article
-}
-
-type Article struct {
-	Id          int    `json:"id"`
-	Title       string `json:"title"`
-	Summary     string `json:"summary"`
-	Url         string `json:"url"`
-	PublishedAt string `json:"publishedAt"`
-}
-
-type ErrorMessage struct {
-	Message string `json:"error"`
-}
 
 const apiUrl = "https://strong-octopus.com/articles/search?keyword=%s&page=%d"
 
@@ -44,7 +28,7 @@ func SearchByKeyword(keyword string, page int) ([]Article, error) {
 		return nil, err
 	}
 
-	if resp.StatusCode < 200 | resp.StatusCode >= 300 {
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		var errorMsg ErrorMessage
 		if err := json.Unmarshal(body, &errorMsg); err != nil {
 			return nil, err
