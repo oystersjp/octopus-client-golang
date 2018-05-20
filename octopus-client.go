@@ -15,7 +15,6 @@ func SearchByKeyword(keyword string, page int) ([]Article, error) {
 	url := fmt.Sprintf(apiUrl, keyword, page)
 
 	resp, err := http.Get(url)
-
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +22,6 @@ func SearchByKeyword(keyword string, page int) ([]Article, error) {
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
-
 	if err != nil {
 		return nil, err
 	}
