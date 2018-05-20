@@ -5,6 +5,7 @@ import (
   "encoding/json"
   "net/http"
   "io/ioutil"
+  "errors"
 )
 
 type Articles struct {
@@ -12,16 +13,20 @@ type Articles struct {
 }
 
 type Article struct {
-	Id          int    `json:"id"`
-	Title       string `json:"title"`
-	Summary     string `json:"summary"`
-	Url         string `json:"url"`
-	PublishedAt string `json:"publishedAt"`
+  Id          int    `json:"id"`
+  Title       string `json:"title"`
+  Summary     string `json:"summary"`
+  Url         string `json:"url"`
+  PublishedAt string `json:"publishedAt"`
+}
+
+type ErrorMessage struct {
+  Message string `json:"error"`
 }
 
 const apiUrl = "https://strong-octopus.com/articles/search?keyword=%s&page=%d"
 
-func SearchByKeyword(keyword string, page int) ([]Article, error) {
+func searchByKeyword(keyword string, page int) ([]Article, error) {
 
   url := fmt.Sprintf(apiUrl, keyword, page)
 
@@ -36,6 +41,16 @@ func SearchByKeyword(keyword string, page int) ([]Article, error) {
   body, err := ioutil.ReadAll(resp.Body)
 
   if err != nil {
+    return nil, err
+  }
+
+  if resp.StatusCode != 200 {
+    var errorMsg ErrorMessage
+    if err := json.Unmarshal(body, &errorMsg); err != nil {
+      return nil, err
+    }
+
+    err := errors.New(errorMsg.Message)
     return nil, err
   }
 
