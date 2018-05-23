@@ -1,4 +1,4 @@
-package octopus-client
+package octopus_client
 
 import (
 	"encoding/json"
