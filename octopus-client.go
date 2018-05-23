@@ -40,7 +40,10 @@ func SearchByKeyword(keyword string, page int) ([]Article, error) {
 		return nil, err
 	}
 
-	var articles Articles
+	var articles struct {
+		Articles []Article
+	}
+
 	if err := json.Unmarshal(body, &articles); err != nil {
 		return nil, err
 	}
