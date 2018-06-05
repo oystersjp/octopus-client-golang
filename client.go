@@ -32,7 +32,7 @@ func (e *ApiError) Error() string {
 }
 
 func (c *Client) SearchByKeyword(keyword string, page int) ([]Article, error) {
-	var path = fmt.Sprintf("/articles/search?keyword=%s&page=%d", keyword, page)
+	const path = "/articles/search"
 
 	params := url.Values{}
 	params.Add("keyword", keyword)
