@@ -2,12 +2,12 @@ package octopus
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
+	"github.com/pkg/errors"
 )
 
 const ApiBaseUrl = "https://strong-octopus.com"
@@ -40,7 +40,7 @@ func (c *Client) SearchByKeyword(keyword string, page int) ([]Article, error) {
 	}
 
 	if err := json.Unmarshal(responseBody, &searchResponse); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "failed to decode json")
 	}
 
 	return searchResponse.Articles, nil
@@ -72,7 +72,7 @@ func (c *Client) request(method string, path string, params url.Values) ([]byte,
 			Message string `json:"error"`
 		}
 		if err := json.Unmarshal(body, &errorResponse); err != nil {
-			return nil, err
+			return nil, errors.Wrap(err, "failed to decode json")
 		}
 
 		return nil, errors.New(errorResponse.Message)
