@@ -25,7 +25,7 @@ func NewClient(presharedKey string) Client {
 }
 
 func (c *Client) SearchByKeyword(keyword string, page int) ([]Article, error) {
-	var path = fmt.Sprintf("/searchResponse/search?keyword=%s&page=%d", keyword, page)
+	var path = fmt.Sprintf("/articles/search?keyword=%s&page=%d", keyword, page)
 
 	params := url.Values{}
 	params.Add("keyword", keyword)
