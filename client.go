@@ -24,6 +24,13 @@ func NewClient(presharedKey string) Client {
 	}
 }
 
+type ApiError struct {
+	Message string
+}
+func (e *ApiError) Error() string {
+	return e.Message
+}
+
 func (c *Client) SearchByKeyword(keyword string, page int) ([]Article, error) {
 	var path = fmt.Sprintf("/articles/search?keyword=%s&page=%d", keyword, page)
 
@@ -75,7 +82,7 @@ func (c *Client) request(method string, path string, params url.Values) ([]byte,
 			return nil, errors.Wrap(err, "failed to decode json")
 		}
 
-		return nil, errors.New(errorResponse.Message)
+		return nil, &ApiError{Message: errorResponse.Message}
 	}
 
 	return body, nil
