@@ -1,4 +1,4 @@
-package octopus_client
+package octopus
 
 type Article struct {
 	Id          int    `json:"id"`
