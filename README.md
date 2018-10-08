@@ -8,7 +8,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/yopidax/octopus-client-golang"
+	"github.com/oystersjp/octopus-client-golang"
 )
 
 func main(){
